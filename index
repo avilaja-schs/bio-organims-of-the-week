@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organism of the Week</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #142c1c;
+    --moss:   #2f5c39;
+    --faded:  #5d7059;
+    --rule:   #b4c3ab;
+    --ochre:  #8f4f14;
+    --paper:  #eef3e7;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: #16221b;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  /* ---------- the 16:9 slide ---------- */
+  #stage {
+    width: 1600px; height: 900px;
+    flex: 0 0 auto;
+    transform-origin: center center;
+    position: relative;
+    overflow: hidden;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='480' height='480' viewBox='0 0 480 480'><g fill='none' stroke='%23294a31' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.15'><g transform='translate(50,40)'><path d='M0 0 C22 15 22 35 0 50 C-22 65 -22 85 0 100'/><path d='M28 0 C6 15 6 35 28 50 C50 65 50 85 28 100'/><path d='M4 12 H24'/><path d='M0 25 H28'/><path d='M4 38 H24'/><path d='M4 62 H24'/><path d='M0 75 H28'/><path d='M4 88 H24'/></g><g transform='translate(190,46)'><path d='M12 2 L12 20 L-2 50 Q-4 58 5 58 L35 58 Q44 58 42 50 L28 20 L28 2 Z'/><path d='M8 2 H32'/><circle cx='12' cy='46' r='3'/><circle cx='24' cy='40' r='2.4'/><circle cx='28' cy='50' r='2'/></g><g transform='translate(350,66)'><circle cx='0' cy='0' r='27'/><circle cx='6' cy='-5' r='9'/><circle cx='-13' cy='8' r='2.6'/><circle cx='-4' cy='15' r='2'/><circle cx='11' cy='14' r='2.2'/></g><g transform='translate(60,200) rotate(12)'><path d='M0 0 C40 -6 64 18 60 56 C22 60 -4 38 0 0 Z'/><path d='M2 2 L58 54'/><path d='M14 6 L30 30'/><path d='M34 10 L45 34'/><path d='M10 22 L27 44'/></g><g transform='translate(215,196)'><circle cx='0' cy='0' r='9'/><circle cx='46' cy='-14' r='9'/><circle cx='36' cy='36' r='9'/><path d='M8 -3 L38 -12'/><path d='M6 8 L31 29'/><path d='M45 -5 L39 27'/></g><g transform='translate(360,206) rotate(-20)'><circle cx='0' cy='0' r='20'/><path d='M15 15 L34 34'/></g><g transform='translate(80,350)'><ellipse cx='0' cy='17' rx='21' ry='15'/><circle cx='-21' cy='-8' r='7'/><circle cx='-7' cy='-17' r='7'/><circle cx='10' cy='-17' r='7'/><circle cx='24' cy='-7' r='7'/></g><g transform='translate(225,352)'><circle cx='0' cy='0' r='28'/><circle cx='0' cy='0' r='22'/><circle cx='-8' cy='-6' r='4'/><circle cx='6' cy='5' r='5'/><circle cx='11' cy='-11' r='3'/></g><g transform='translate(365,345)'><path d='M0 -16 L0 20'/><path d='M0 -8 C-26 -32 -42 -2 -21 13 C-11 19 -2 11 0 2'/><path d='M0 -8 C26 -32 42 -2 21 13 C11 19 2 11 0 2'/><path d='M0 -16 L-9 -27'/><path d='M0 -16 L9 -27'/></g></g></svg>");
+    background-size: 440px 440px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 34px 50px 26px;
+  }
+
+  /* ---------- masthead ---------- */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 3px solid var(--rule); padding-bottom: 12px; }
+  h1 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 44px; letter-spacing: -0.015em; }
+  .stamp {
+    border: 3px solid var(--ochre); border-radius: 4px; color: var(--ochre);
+    padding: 8px 20px 7px; font-size: 26px; font-weight: 600;
+    letter-spacing: .12em; text-transform: uppercase;
+    transform: rotate(-2.5deg); background: rgba(255,255,255,.6);
+    white-space: nowrap;
+  }
+
+  /* ---------- body of the slide ---------- */
+  .middle { display: grid; grid-template-columns: 1fr 560px; gap: 44px; align-items: center; }
+
+  .facts { background: rgba(253,254,251,.82); border-radius: 6px; padding: 24px 28px; }
+  .common { font-family: 'Fraunces', serif; font-weight: 700; font-size: 104px; line-height: 1.0; letter-spacing: -0.022em; }
+  .binomial { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 58px; color: var(--moss); margin-top: 8px; line-height: 1.06; }
+
+  .phylum { display: flex; align-items: baseline; gap: 18px; margin: 20px 0 18px; padding: 12px 0; border-top: 3px solid var(--rule); border-bottom: 3px solid var(--rule); }
+  .phylum span { font-size: 30px; font-style: italic; color: var(--faded); }
+  .phylum strong { font-size: 46px; font-weight: 600; }
+
+  .fact { border-left: 8px solid var(--ochre); padding-left: 24px; font-size: 44px; line-height: 1.32; color: #1d3320; }
+
+  .plate-wrap { display: flex; flex-direction: column; align-items: center; }
+  .plate { width: 100%; background: #fff; padding: 12px; border: 1px solid #b3c0aa; border-radius: 4px; box-shadow: 0 14px 30px rgba(20,40,25,.18); }
+  .plate-frame { width: 100%; aspect-ratio: 16 / 9; background: #f6f8f3; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  #orgImage { width: 100%; height: 100%; object-fit: contain; display: none; }
+  .loader { position: absolute; padding: 0 30px; text-align: center; font-size: 22px; font-style: italic; color: var(--faded); }
+  .caption { margin-top: 12px; font-size: 24px; color: var(--faded); text-align: center; }
+
+  /* ---------- footer ---------- */
+  .bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 3px solid var(--rule); padding-top: 12px; }
+  .controls { display: flex; gap: 12px; }
+  button {
+    font-family: inherit; font-size: 22px; font-weight: 500;
+    padding: 11px 24px; border-radius: 4px; cursor: pointer;
+    border: 2px solid var(--moss); background: transparent; color: var(--moss);
+  }
+  button:hover { background: rgba(47,92,57,.1); }
+  .primary { background: var(--moss); color: #f2f7ee; }
+  .primary:hover { background: #26492e; }
+  button:focus-visible { outline: 3px solid var(--ochre); outline-offset: 3px; }
+  .credit { font-size: 22px; font-style: italic; color: var(--faded); }
+
+  /* hide the buttons while the PNG is being captured */
+  #stage.capturing .controls { visibility: hidden; }
+
+  /* ---------- toast (lives outside the slide, never captured) ---------- */
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%);
+    background: #eef3e7; color: #142c1c; font-size: 18px; font-weight: 500;
+    padding: 12px 22px; border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 50;
+  }
+  #toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+  <div class="top">
+    <h1>Organism of the Week</h1>
+    <div class="stamp" id="stamp">Loading</div>
+  </div>
+
+  <div class="middle">
+    <div class="facts">
+      <h2 class="common" id="name">&mdash;</h2>
+      <p class="binomial" id="sci">&mdash;</p>
+      <div class="phylum"><span>Phylum</span><strong id="phylum">&mdash;</strong></div>
+      <p class="fact" id="fact">&mdash;</p>
+    </div>
+
+    <div class="plate-wrap">
+      <div class="plate">
+        <div class="plate-frame">
+          <p class="loader" id="loader">Retrieving image</p>
+          <img id="orgImage" alt="">
+        </div>
+      </div>
+      <p class="caption" id="specimenNo">&nbsp;</p>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="controls">
+      <button class="primary" onclick="showCurrent()">This week</button>
+      <button onclick="randomize()">Another organism</button>
+      <button onclick="copySlide()">Copy slide</button>
+      <button onclick="downloadSlide()">Save PNG</button>
+    </div>
+    <p class="credit">Images from Wikipedia</p>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ===== scale the 1600x900 slide to fill the window, always 16:9 =====
+const stage = document.getElementById('stage');
+function fitStage() {
+  const s = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+  stage.style.transform = `scale(${s})`;
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+
+function toast(msg, ms) {
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), ms || 2600);
+}
+
+// ===== Google Sheet =====
+// Sharing must be "Anyone with the link - Viewer".
+const SHEET_ID = '11nIGN397osiuzcBvCacA_IU18DGInSe44eMJXGiIqKY';
+const DATA_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+let allOrganisms = [];
+let shuffledDeck = [];
+let currentOrg = null;
+
+function findCol(headers, keywords, fallbackIndex) {
+  for (let i = 0; i < headers.length; i++) {
+    const h = String(headers[i] || '').toLowerCase();
+    if (keywords.some(k => h.includes(k))) return i;
+  }
+  return fallbackIndex;
+}
+
+async function init() {
+  try {
+    const res = await fetch(DATA_URL);
+    const text = await res.text();
+    const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+
+    const cols = json.table.cols.map(c => c.label || '');
+    let rows = json.table.rows.map(r => (r.c || []).map(cell => (cell && cell.v != null) ? String(cell.v).trim() : ''));
+
+    let headers = cols;
+    if (!cols.join(' ').toLowerCase().includes('scientific')) {
+      if (rows.length && rows[0].join(' ').toLowerCase().includes('scientific')) {
+        headers = rows[0];
+        rows = rows.slice(1);
+      }
+    }
+
+    const iSci    = findCol(headers, ['scientific', 'sci'], 0);
+    const iName   = findCol(headers, ['common'], 1);
+    const iPhylum = findCol(headers, ['phylum'], 2);
+    const iFact   = findCol(headers, ['fact', 'insight', 'note'], 4);
+    const iImg    = findCol(headers, ['image', 'img', 'photo', 'url'], 5);
+
+    allOrganisms = rows.map(r => ({
+      s: r[iSci] || '',
+      n: r[iName] || '',
+      p: r[iPhylum] || '\u2014',
+      f: r[iFact] || 'Fact coming soon.',
+      img: r[iImg] || null
+    })).filter(o => o.s || o.n);
+
+    if (!allOrganisms.length) throw new Error('No rows found');
+    allOrganisms.forEach((o, i) => o.idx = i + 1);
+
+    createNewDeck();
+    showCurrent();
+  } catch (err) {
+    document.getElementById('stamp').innerText = 'No data';
+    document.getElementById('loader').innerText = 'Set the sheet sharing to "Anyone with the link - Viewer", then reload.';
+  }
+}
+
+function createNewDeck() {
+  shuffledDeck = [...allOrganisms];
+  for (let i = shuffledDeck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledDeck[i], shuffledDeck[j]] = [shuffledDeck[j], shuffledDeck[i]];
+  }
+}
+
+async function getWiki(title) {
+  if (!title) return null;
+  try {
+    const r = await fetch(`https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages&piprop=original|thumbnail&pithumbsize=1600&titles=${encodeURIComponent(title)}&redirects=1`);
+    const d = await r.json();
+    const pages = d.query.pages;
+    const id = Object.keys(pages)[0];
+    if (id === "-1") return null;
+    if (pages[id].original) return pages[id].original.source;
+    if (pages[id].thumbnail) return pages[id].thumbnail.source;
+    return null;
+  } catch (e) { return null; }
+}
+
+// Shrinks type until a block fits its allotted height, so long names never overflow the slide.
+function fitText(el, startPx, minPx, maxHeight) {
+  let size = startPx;
+  el.style.fontSize = size + 'px';
+  while (el.scrollHeight > maxHeight && size > minPx) {
+    size -= 2;
+    el.style.fontSize = size + 'px';
+  }
+}
+
+let renderToken = 0;
+
+async function render(org) {
+  const token = ++renderToken;
+  currentOrg = org;
+  const img = document.getElementById('orgImage');
+  const load = document.getElementById('loader');
+
+  img.style.display = 'none';
+  img.removeAttribute('src');
+  load.style.display = 'block';
+  load.innerText = 'Retrieving image';
+
+  const nameEl = document.getElementById('name');
+  const factEl = document.getElementById('fact');
+  nameEl.innerText = org.n || org.s;
+  document.getElementById('sci').innerText = org.s;
+  document.getElementById('phylum').innerText = org.p;
+  factEl.innerText = org.f;
+  document.getElementById('specimenNo').innerText = `Organism ${org.idx} of ${allOrganisms.length}`;
+  img.alt = org.n ? `Photograph of a ${org.n}` : 'Organism photograph';
+
+  fitText(nameEl, 104, 54, 225);
+  fitText(factEl, 44, 28, 210);
+
+  let src = org.img;
+  if (!src) src = await getWiki(org.s);
+  if (!src) src = await getWiki(org.n);
+  if (token !== renderToken) return;
+
+  if (!src) { load.innerText = 'No image found on Wikipedia for this organism.'; return; }
+
+  // crossOrigin lets the PNG export include the photo instead of failing.
+  img.crossOrigin = 'anonymous';
+  img.onload  = () => { if (token === renderToken) { load.style.display = 'none'; img.style.display = 'block'; } };
+  img.onerror = () => {
+    if (token !== renderToken) return;
+    if (img.crossOrigin) {          // retry once without CORS
+      img.removeAttribute('crossorigin');
+      img.src = src;
+    } else {
+      load.innerText = 'The image would not load.';
+    }
+  };
+  img.src = src;
+}
+
+function showCurrent() {
+  if (!allOrganisms.length) return;
+  const d = new Date();
+  const week = Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 86400000) + 1) / 7);
+  document.getElementById('stamp').innerText = `Week ${week}`;
+  render(allOrganisms[week % allOrganisms.length]);
+}
+
+function randomize() {
+  if (!allOrganisms.length) return;
+  if (shuffledDeck.length === 0) createNewDeck();
+  document.getElementById('stamp').innerText = 'Random';
+  render(shuffledDeck.pop());
+}
+
+// ===== export the slide as a 1600x900 PNG =====
+async function slideBlob() {
+  await (document.fonts ? document.fonts.ready : Promise.resolve());
+  const prevTransform = stage.style.transform;
+  stage.classList.add('capturing');
+  stage.style.transform = 'scale(1)';
+  try {
+    const canvas = await html2canvas(stage, {
+      width: 1600, height: 900, windowWidth: 1600, windowHeight: 900,
+      scale: 1, useCORS: true, backgroundColor: '#eef3e7', logging: false
+    });
+    return await new Promise(res => canvas.toBlob(res, 'image/png'));
+  } finally {
+    stage.classList.remove('capturing');
+    stage.style.transform = prevTransform;
+    fitStage();
+  }
+}
+
+function slideName() {
+  const base = (currentOrg && (currentOrg.n || currentOrg.s)) || 'organism';
+  return base.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.png';
+}
+
+function saveBlob(blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = slideName();
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+async function copySlide() {
+  toast('Capturing slide...', 8000);
+  try {
+    const blobPromise = slideBlob();
+    // Passing the promise keeps Safari's clipboard permission alive during capture.
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blobPromise })]);
+    toast('Slide copied. Paste it into PowerPoint with Ctrl+V.');
+  } catch (e) {
+    try {
+      saveBlob(await slideBlob());
+      toast('Clipboard blocked by this browser, so the PNG was downloaded instead.', 4000);
+    } catch (e2) {
+      toast('Could not capture the slide. Try the Save PNG button.', 4000);
+    }
+  }
+}
+
+async function downloadSlide() {
+  toast('Capturing slide...', 8000);
+  try {
+    saveBlob(await slideBlob());
+    toast('PNG saved to your Downloads folder.');
+  } catch (e) {
+    toast('Could not capture the slide.', 4000);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
