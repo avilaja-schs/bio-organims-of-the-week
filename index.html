@@ -40,7 +40,7 @@
     background-size: 440px 440px;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    padding: 34px 50px 26px;
+    padding: 34px 40px 26px;
   }
 
   /* ---------- masthead ---------- */
@@ -55,10 +55,10 @@
   }
 
   /* ---------- body of the slide ---------- */
-  .middle { display: grid; grid-template-columns: 1fr 560px; gap: 44px; align-items: center; }
+  .middle { display: grid; grid-template-columns: 1fr 800px; gap: 36px; align-items: center; }
 
   .facts { background: rgba(253,254,251,.82); border-radius: 6px; padding: 24px 28px; }
-  .common { font-family: 'Fraunces', serif; font-weight: 700; font-size: 104px; line-height: 1.0; letter-spacing: -0.022em; }
+  .common { font-family: 'Fraunces', serif; font-weight: 700; font-size: 100px; line-height: 1.0; letter-spacing: -0.022em; }
   .binomial { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 58px; color: var(--moss); margin-top: 8px; line-height: 1.06; }
 
   .phylum { display: flex; align-items: baseline; gap: 18px; margin: 20px 0 18px; padding: 12px 0; border-top: 3px solid var(--rule); border-bottom: 3px solid var(--rule); }
@@ -274,8 +274,8 @@ async function render(org) {
   document.getElementById('specimenNo').innerText = `Organism ${org.idx} of ${allOrganisms.length}`;
   img.alt = org.n ? `Photograph of a ${org.n}` : 'Organism photograph';
 
-  fitText(nameEl, 104, 54, 225);
-  fitText(factEl, 44, 28, 210);
+  fitText(nameEl, 100, 50, 235);
+  fitText(factEl, 44, 28, 215);
 
   let src = org.img;
   if (!src) src = await getWiki(org.s);
@@ -376,4 +376,4 @@ async function downloadSlide() {
 init();
 </script>
 </body>
-</html> 
+</html>
